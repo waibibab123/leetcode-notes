@@ -1,0 +1,43 @@
+# 51、N皇后
+此处仅讲解一下三个标记数组
+* col：标记该列是否有棋子
+* dg：标记主对角线上是否有棋子，主对角线的方程为y=-x+b，可以用b=x+y=u+i唯一标记一个对角线
+* udg：标记次对角线上是否有棋子，方程为y=x+b，可以用b=y-x唯一标记，但是这个值可能为负，因此加上偏移量n
+
+C++
+```cpp
+class Solution {
+public:
+    static const int N = 20;
+    vector<bool> col = vector<bool>(N, false);
+    vector<bool> dg = vector<bool>(N, false);
+    vector<bool> udg = vector<bool>(N, false);
+    vector<string> path;
+    vector<vector<string>> res;
+    int n;
+    void dfs(int u) {
+        if (u == n) {
+            res.push_back(path);
+            return;
+        }
+        for (int i = 0; i < n; i ++ ) {
+            if (!col[i] && !udg[i - u + n] && !dg[i + u]) {
+                col[i] = udg[i - u + n] = dg[i + u] = true;
+                path[u][i] = 'Q';
+                dfs(u + 1);
+                path[u][i] = '.';
+                col[i] = udg[i - u + n] = dg[i + u] = false;
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int _n) {
+        n = _n;
+        for (int i = 0; i < n; i ++ ) {
+            string temp(n, '.');
+            path.push_back(temp);
+        }
+        dfs(0);
+        return res;
+    }
+};
+```
