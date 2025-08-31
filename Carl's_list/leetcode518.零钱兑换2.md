@@ -1,4 +1,4 @@
-# 518、零钱兑换3
+# 518、零钱兑换2
 题目网址：https://leetcode.cn/problems/coin-change-ii/description/
 
 题目难度：mid
